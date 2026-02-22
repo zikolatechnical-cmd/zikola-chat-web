@@ -15,7 +15,7 @@ RUN pnpm install
 RUN pnpm build
 # Copy the config now so that we don't create another layer in the app image
 # Use our custom config
-COPY config.zikola.json /src/webapp/config.json
+COPY config.json /src/webapp/config.json
 # Copy branding assets
 COPY branding/ /src/webapp/
 
