@@ -16,7 +16,7 @@
   "brand": "Zikola Chat",
 
   "branding": {
-  "welcome_background_url": "/res/img/branding/3d-dark-grunge-display-background-with-smoky-atmosphere.jpg",
+  "welcome_background_url": "/res/img/branding/background.jpg",
   "auth_header_logo_url": "/res/img/branding/logo.png",
   "welcome_text": "Welcome to Zikola Chat 🚀"
 },
