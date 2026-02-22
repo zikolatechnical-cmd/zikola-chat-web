@@ -12,6 +12,7 @@ WORKDIR /src
 COPY --exclude=docker . /src
 RUN corepack enable
 RUN pnpm install
+ENV NODE_OPTIONS=--max_old_space_size=4096
 RUN pnpm build
 # Copy the config now so that we don't create another layer in the app image
 # Use our custom config
