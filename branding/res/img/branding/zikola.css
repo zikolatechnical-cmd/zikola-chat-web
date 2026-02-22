@@ -1,0 +1,23 @@
+:root {
+  /* Orange brand palette (عدّلها حسب هوية Zikola) */
+  --zikola-500: #ff7a00;
+  --zikola-600: #ff6a00;
+  --zikola-700: #e85f00;
+
+  /* أهم 3 توكنز بتأثر على الـ Primary buttons & accents */
+  --cpd-color-bg-action-primary-rest: var(--zikola-500);
+  --cpd-color-bg-action-primary-hovered: var(--zikola-600);
+  --cpd-color-bg-action-primary-pressed: var(--zikola-700);
+
+  /* نص وأيقونات الأكشن */
+  --cpd-color-text-action-primary: #ffffff;
+  --cpd-color-icon-accent-primary: var(--zikola-500);
+  --cpd-color-border-action-primary: var(--zikola-500);
+}
+
+/* اختياري: بعض الأماكن لسه بتستخدم "green" مباشرة */
+:root {
+  --cpd-color-green-600: var(--zikola-500);
+  --cpd-color-green-700: var(--zikola-600);
+  --cpd-color-green-800: var(--zikola-700);
+}
