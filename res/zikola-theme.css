@@ -1,0 +1,28 @@
+/* Zikola Brand Color */
+
+:root {
+  --cpd-color-primary: #ff7a00 !important;
+  --cpd-color-accent: #ff7a00 !important;
+  --cpd-color-link: #ff7a00 !important;
+}
+
+/* Buttons */
+.mx_Button_primary {
+  background-color: #ff7a00 !important;
+}
+
+/* Inputs focus */
+input:focus,
+textarea:focus {
+  border-color: #ff7a00 !important;
+}
+
+/* Selected elements */
+.mx_AccessibleButton_kind_primary {
+  background-color: #ff7a00 !important;
+}
+
+/* Checkboxes / toggles */
+input[type="checkbox"]:checked {
+  accent-color: #ff7a00;
+}
