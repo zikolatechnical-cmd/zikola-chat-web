@@ -18,8 +18,7 @@ RUN /src/scripts/docker-package.sh
 
 # Copy the config now so that we don't create another layer in the app image
 # Use our custom config
-COPY config.json /src/webapp/config.json
-
+COPY config.zikola.json /src/webapp/config.json
 # Copy branding assets
 COPY branding/ /src/webapp/
 
