@@ -25,7 +25,7 @@
   "default_country_code": "GB",
   "show_labs_settings": false,
   "features": {},
-  "custom_css": "/branding/zikola.css",
+  "custom_css": "/branding/",
 
   "default_widget_container_height": 280,
 
