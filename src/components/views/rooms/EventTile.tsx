@@ -293,7 +293,20 @@ export function isEligibleForSpecialReceipt(event: MatrixEvent): boolean {
     // Default case
     return true;
 }
+const HIDE_SYSTEM_FOR_PL_BELOW = 100; // 100=Admin فقط | 50=Admin+Moderator
 
+const hiddenTypes = new Set<string>([
+    "m.room.member",
+    "m.room.join_rules",
+    "m.room.power_levels",
+    "m.room.history_visibility",
+    "m.room.encryption",
+    "m.room.name",
+    "m.room.topic",
+    "m.room.avatar",
+    "m.room.canonical_alias",
+    "m.room.server_acl",
+]);
 // MUST be rendered within a RoomContext with a set timelineRenderingType
 export class UnwrappedEventTile extends React.Component<EventTileProps, IState> {
     private suppressReadReceiptAnimation: boolean;
@@ -950,6 +963,19 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     }
 
     public render(): ReactNode {
+        const cli = MatrixClientPeg.safeGet();
+        const roomId = this.props.mxEvent.getRoomId();
+        const room = roomId ? cli.getRoom(roomId) : null;
+
+        const myUserId = cli.getUserId();
+        const myPL = room && myUserId ? (room.getMember(myUserId)?.powerLevel ?? 0) : 0;
+
+        const eventType = this.props.mxEvent.getType();
+
+        // اخفاء رسائل النظام عن غير الأدمن
+        if (hiddenTypes.has(eventType) && myPL < HIDE_SYSTEM_FOR_PL_BELOW) {
+            return null;
+        }
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType();
 
