@@ -963,22 +963,21 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     }
 
     public render(): ReactNode {
-        const cli = MatrixClientPeg.safeGet();
+        
+        const msgtype = this.props.mxEvent.getContent().msgtype;
+        const eventType = this.props.mxEvent.getType();
+
+       const cli = MatrixClientPeg.safeGet();
         const roomId = this.props.mxEvent.getRoomId();
-        const room = roomId ? cli.getRoom(roomId) : null;
+        const tileRoom = roomId ? cli.getRoom(roomId) : null;
 
         const myUserId = cli.getUserId();
-        const myPL = room && myUserId ? (room.getMember(myUserId)?.powerLevel ?? 0) : 0;
-
-        const eventType = this.props.mxEvent.getType();
+        const myPL = tileRoom && myUserId ? (tileRoom.getMember(myUserId)?.powerLevel ?? 0) : 0;
 
         // اخفاء رسائل النظام عن غير الأدمن
         if (hiddenTypes.has(eventType) && myPL < HIDE_SYSTEM_FOR_PL_BELOW) {
             return null;
         }
-        const msgtype = this.props.mxEvent.getContent().msgtype;
-        const eventType = this.props.mxEvent.getType();
-
         const {
             hasRenderer,
             isBubbleMessage,
