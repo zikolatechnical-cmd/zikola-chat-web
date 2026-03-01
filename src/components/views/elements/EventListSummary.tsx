@@ -25,6 +25,7 @@ import AccessibleButton from "./AccessibleButton";
 import RoomContext from "../../../contexts/RoomContext";
 import { arrayHasDiff } from "../../../utils/arrays.ts";
 import { objectHasDiff } from "../../../utils/objects.ts";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
@@ -602,7 +603,21 @@ export default class EventListSummary extends React.Component<Props, State> {
         const orderedTransitionSequences = Object.keys(aggregate.names).sort(
             (seq1, seq2) => aggregate.indices[seq1] - aggregate.indices[seq2],
         );
+        const HIDE_SYSTEM_FOR_PL_BELOW = 100; // 100 = Admin فقط | 50 = Admin+Moderator
 
+        const cli = MatrixClientPeg.safeGet();
+        const roomId = this.props.events?.[0]?.getRoomId?.();
+        const room = roomId ? cli.getRoom(roomId) : null;
+        const myUserId = cli.getUserId();
+        const myPL = room && myUserId ? (room.getMember(myUserId)?.powerLevel ?? 0) : 0;
+
+        // هل كل الأحداث اللي متلخصة هنا هي member events (join/leave/name change)؟
+        const allAreMemberEvents = (this.props.events ?? []).every((ev) => ev.getType() === EventType.RoomMember);
+
+        // لو مش Admin → اخفي السطر كله (وبالتالي مفيش expand/collapse)
+        if (allAreMemberEvents && myPL < HIDE_SYSTEM_FOR_PL_BELOW) {
+            return null;
+        }
         return (
             <GenericEventListSummary
                 data-testid={this.props["data-testid"]}
